@@ -4,5 +4,14 @@
  */
 public class AmbientDevice {
 
+    private String name;
+
+    public AmbientDevice(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
 
 }

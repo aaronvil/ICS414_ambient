@@ -1439,10 +1439,7 @@ abstract class EZElement {
    * @return true if has a parent. Otherwise false.
    */
   public boolean hasParent() {
-    if (parent == null) {
-      return false;
-    }
-    return true;
+      return parent != null;
   }
 
   /**
