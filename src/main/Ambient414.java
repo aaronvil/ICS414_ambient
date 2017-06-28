@@ -1,4 +1,5 @@
 import java.awt.Color;
+
 /**
  * Created by Ryan on 6/26/2017.
  */
@@ -7,11 +8,80 @@ public class Ambient414 {
     public static void main(String []args) {
 
         EZ.initialize(800,800);
-        EZ.addCircle(400, 400,200, 200, new Color(0.0f, 1.0f, 0.0f, 0.75f), true);
-        EZ.addCircle(300, 400,100, 100, new Color(1.0f, 0.0f, 0.0f, 0.5f), true);
-        EZ.addCircle(500, 400,100, 100, new Color(0.0f, 0.0f, 1.0f, 0.5f), true);
-        EZ.addCircle(400, 300,100, 100, new Color(1.0f, 0.0f, 1.0f, 0.5f), true);
-        EZ.addCircle(400, 500,100, 100, new Color(0.0f, 1.0f, 1.0f, 0.5f), true);
+        AmbientDevice device = new AmbientDevice();
+
+        EZText title = EZ.addText(400,100, "Ambient Device", Color.black, 50);
+
+        int mouseX;
+        int mouseY;
+        boolean leftMousePressed;
+
+        boolean exit = false;
+
+        while (!exit) {
+
+            EZ.refreshScreen();
+            mouseX = EZInteraction.getXMouse();
+            mouseY = EZInteraction.getYMouse();
+            leftMousePressed = EZInteraction.wasMouseLeftButtonPressed();
+
+
+            if (EZInteraction.wasKeyPressed('x'))
+                exit = true;
+
+            if (leftMousePressed)
+            {
+               if (device.getColorSlider().isPointInElement(mouseX, mouseY)){
+
+                   boolean leftMouseDown = EZInteraction.isMouseLeftButtonDown();
+                   while (leftMouseDown && device.getColorSlider().isPointInElement(mouseX, mouseY)) {
+
+                       EZ.refreshScreen();
+
+                       mouseX = EZInteraction.getXMouse();
+                       mouseY = EZInteraction.getYMouse();
+
+                       if (mouseX < 100) mouseX = 100;
+                       if (mouseX > EZ.getWindowWidth() - 100)  mouseX = EZ.getWindowWidth() - 100;
+
+                       device.getColorSlider().translateTo(mouseX, device.getColorSlider().getYCenter());
+
+                       float deviceColor = (device.getColorSlider().getXCenter() - 100.0f) / (EZ.getWindowWidth() - 100.0f - 100.0f);
+                       device.setColor(deviceColor);
+
+                       leftMouseDown = EZInteraction.isMouseLeftButtonDown();
+                   }
+
+               }
+
+                if (device.getBrightnessSlider().isPointInElement(mouseX, mouseY)){
+
+                    boolean leftMouseDown = EZInteraction.isMouseLeftButtonDown();
+                    while (leftMouseDown && device.getBrightnessSlider().isPointInElement(mouseX, mouseY)) {
+
+                        EZ.refreshScreen();
+
+                        mouseX = EZInteraction.getXMouse();
+                        mouseY = EZInteraction.getYMouse();
+
+                        if (mouseX < 100) mouseX = 100;
+                        if (mouseX > EZ.getWindowWidth() - 100)  mouseX = EZ.getWindowWidth() - 100;
+
+                        device.getBrightnessSlider().translateTo(mouseX, device.getBrightnessSlider().getYCenter());
+
+                        float deviceBrightness = (device.getBrightnessSlider().getXCenter() - 100.0f) / (EZ.getWindowWidth() - 100.0f - 100.0f);
+                        device.setBrightness(deviceBrightness);
+
+                        leftMouseDown = EZInteraction.isMouseLeftButtonDown();
+                    }
+
+                }
+
+            }
+
+        }
+
+        System.exit(0);
     }
 
 }

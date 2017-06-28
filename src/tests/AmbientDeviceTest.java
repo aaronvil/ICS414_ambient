@@ -7,10 +7,5 @@ import static org.junit.Assert.*;
  */
 public class AmbientDeviceTest {
 
-    private AmbientDevice device = new AmbientDevice("Lamp");
-    @Test
-    public void getName() throws Exception {
-        assertEquals("Lamp", device.getName());
-    }
 
 }
