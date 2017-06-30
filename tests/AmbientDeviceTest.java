@@ -16,13 +16,5 @@ public class AmbientDeviceTest {
     public void setColor() throws Exception {
     }
 
-    @Test
-    public void getColorSlider() throws Exception {
-    }
-
-    @Test
-    public void getBrightnessSlider() throws Exception {
-    }
-
 
 }
