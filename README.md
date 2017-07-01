@@ -11,4 +11,4 @@ We use [EZGraphics](http://www2.hawaii.edu/~dylank/ics111/) for the UI and Graph
 ## Interface Controls
 Use the sliders below the virtual ambient lamp to control color and brightness.  
 
-![alt test](hhttps://raw.githubusercontent.com/aaronvil/ICS414_ambient/comments-tests/doc/images/assignment1.png)
+![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/comments-tests/doc/images/assignment1.png)
