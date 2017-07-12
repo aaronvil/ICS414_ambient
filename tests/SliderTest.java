@@ -12,7 +12,7 @@ public class SliderTest {
     @Test
     public void setSliderPosition() throws Exception {
         EZ.initialize(500,500);
-        Slider testSlider = new Slider(500/2, 500/2, 100, 400, 20, "TestDevice", 0.25f);
+        Slider testSlider = new Slider(500/2, 500/2, 100, 400, 20, "TestDevice", 0.25f, 25000);
         testSlider.setSliderPosition(300);
         assertEquals(testSlider.getSlider().getXCenter(), 300);
         testSlider.setSliderPosition(25);

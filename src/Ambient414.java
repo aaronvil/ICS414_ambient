@@ -1,10 +1,11 @@
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 /**
  * Ambient project for ICS414 Summer 2017.
  * Created by Ryan Theriot and Aaron Jhumar Villanueva.
- *
+ * <p>
  * Dylan Kobayashi 's EZGraphics library used for UI and graphics.
  */
 public class Ambient414 {
@@ -22,14 +23,19 @@ public class Ambient414 {
         //Create the title, ambient device (virtual lamp), color slider and brightness slider
         EZText title = EZ.addText(W_WIDTH / 2, 150, "Ambient Device", Color.BLACK, 50);
         AmbientDevice device = new AmbientDevice(W_WIDTH / 2, W_HEIGHT / 2 - 50, 250);
-        Slider colorSlider = new Slider(W_WIDTH / 2, W_HEIGHT - 100, 50, W_WIDTH - 200, 20, "Color", 0.5f);
-        Slider brightnessSlider = new Slider(W_WIDTH / 2, W_HEIGHT - 200, 50, W_WIDTH - 200, 20, "Brightness", 0.5f);
+        Slider minSlider = new Slider(W_WIDTH / 2, W_HEIGHT - 100, 50, W_WIDTH - 200, 20, "Min Value", 0.25f, 25000);
+        Slider maxSlider = new Slider(W_WIDTH / 2, W_HEIGHT - 200, 50, W_WIDTH - 200, 20, "Max Value", 0.75f, 25000);
+
+        //Data Class for PineFlatData
+        PineFlatData dataTest = new PineFlatData((int) (100 * minSlider.getSliderValue()), (int) (100 * maxSlider.getSliderValue()));
 
         //Variables ot be used within the main loop of program
         int mouseX;
         int mouseY;
         boolean leftMouseDown;
         boolean exit = false;
+
+
 
         //Main program loop
         while (!exit) {
@@ -48,17 +54,28 @@ public class Ambient414 {
             if (leftMouseDown) {
 
                 //If mouse within color slider adjust slider and lamp color
-                if (colorSlider.getSlider().isPointInElement(mouseX, mouseY)) {
-                    colorSlider.setSliderPosition(mouseX);
-                    device.setColor(colorSlider.getSliderValue());
+                if (minSlider.getSlider().isPointInElement(mouseX, mouseY)) {
+                    if (maxSlider.getSlider().getXCenter() < minSlider.getSlider().getXCenter()) {
+                        maxSlider.setSliderPosition(minSlider.getSlider().getXCenter() + 5);
+                    }
+                    minSlider.setSliderPosition(mouseX);
+                    device.setColor(minSlider.getSliderValue());
+
                 }
 
                 //If mouse within brightness slider adjust slider and lamp brightness
-                if (brightnessSlider.getSlider().isPointInElement(mouseX, mouseY)) {
-                    brightnessSlider.setSliderPosition(mouseX);
-                    device.setBrightness(brightnessSlider.getSliderValue());
+                if (maxSlider.getSlider().isPointInElement(mouseX, mouseY)) {
+                    if (minSlider.getSlider().getXCenter() > maxSlider.getSlider().getXCenter()) {
+                        minSlider.setSliderPosition(maxSlider.getSlider().getXCenter() - 5);
+                    }
+                    maxSlider.setSliderPosition(mouseX);
+                    device.setBrightness(maxSlider.getSliderValue());
                 }
+
+                dataTest.setMinMax((int)minSlider.getNormalizedSliderValue(), (int)maxSlider.getNormalizedSliderValue());
             }
+
+            System.out.println(dataTest.getBrightnessValue());
         } //End of main program loop
 
         System.exit(0);

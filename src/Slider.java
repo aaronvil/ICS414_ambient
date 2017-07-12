@@ -7,6 +7,7 @@ import java.awt.Color;
 public class Slider {
 
     private float value;
+    private int normalizedValue;
     private int length;
     private int xPos, yPos, xMin, xMax;
 
@@ -27,11 +28,12 @@ public class Slider {
      * @param label Label text. Centered and above the slider
      * @param startValue Starting value of he slider
      */
-    public Slider(int xPosition, int yPosition, int radius, int length, int fontSize, String label, float startValue) {
+    public Slider(int xPosition, int yPosition, int radius, int length, int fontSize, String label, float startValue, int normValue) {
         xPos = xPosition;
         yPos = yPosition;
         this.length = length;
         value = startValue;
+        this.normalizedValue = normValue;
 
         if (value > 1.0f) value = 1.0f;
         if (value < 0.0f) value = 0.0f;
@@ -42,7 +44,7 @@ public class Slider {
 
         sliderBackground = EZ.addRectangle(xPosition, yPosition, this.length, 10, Color.gray, true);
         sliderKnob = EZ.addCircle(knobXPos, yPos, radius, radius, knobColor, true);
-        valueText = EZ.addText(knobXPos, yPos, String.valueOf((int) (value * 100)), Color.white, fontSize);
+        valueText = EZ.addText(knobXPos, yPos, String.valueOf((int) (value * normalizedValue)), Color.white, fontSize);
         EZ.addText(knobXPos, yPos - radius, label, Color.BLACK, (int) (fontSize * 1.25f));
     }
 
@@ -53,6 +55,8 @@ public class Slider {
     public float getSliderValue() {
         return value;
     }
+
+    public float getNormalizedSliderValue() { return value * normalizedValue; }
 
     /**
      * Set the slider position on the screen.
@@ -77,7 +81,7 @@ public class Slider {
         if (value > 1.0f) this.value = 1.0f;
         if (value < 0.0f) this.value = 0.0f;
         this.value = value;
-        valueText.setMsg(String.format("%.1f", value * 100));
+        valueText.setMsg(String.format("%.1f", value * normalizedValue));
     }
 
     /**
