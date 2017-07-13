@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * Class to obtain data from the US Army Corps of Engineers for the Pine Flat for Kings River
  * http://www.spk-wc.usace.army.mil/fcgi-bin/hourly.py?report=pnf
- * Created by Ryan on 7/11/17.
+ * Created by Ryan Theriot and Aaron Jhumar Villanueva.
  */
 public class PineFlatData {
 
@@ -168,5 +168,12 @@ public class PineFlatData {
         return dataMax;
     }
 
+    public int getCurrentOutflowValue() {
+        return currentOutflowValue;
+    }
+
+    public int getCurrentInflowValue() {
+        return currentInflowValue;
+    }
 
 }

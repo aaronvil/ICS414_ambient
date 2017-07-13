@@ -2,6 +2,7 @@ import java.awt.Color;
 
 /**
  * A virtual representation of an ambient device lamp.
+ * Created by Ryan Theriot and Aaron Jhumar Villanueva.
  */
 public class AmbientDevice {
 
@@ -57,5 +58,12 @@ public class AmbientDevice {
         lamp.setColor(lampColor);
     }
 
+    public float getBrightness() {
+        return this.brightness;
+    }
+
+    public float getHue() {
+        return this.hue;
+    }
 
 }
