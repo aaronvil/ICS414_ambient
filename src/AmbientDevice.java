@@ -34,26 +34,26 @@ public class AmbientDevice {
     }
 
     /**
-     * Setter for the brightness of the lamp with a value between 0.0-1.0.
+     * Setter for the brightness of the lamp with a value between 0.0-100.0
      * @param value Brightness of lamp
      */
     public void setBrightness(float value) {
-        if (value > 1.0f) value = 1.0f;
+        if (value > 100.0f) value = 100.0f;
         if (value < 0.0f) value = 0.0f;
-        this.brightness = value;
-        lampColor = Color.getHSBColor(hue, saturation, value);
+        this.brightness = value / 100;
+        lampColor = Color.getHSBColor(hue, saturation, this.brightness);
         lamp.setColor(lampColor);
     }
 
     /**
-     * Setter for the color of the lamp with a value between 0.0-1.0
+     * Setter for the color of the lamp with a value between 0.0-100.0
      * @param value Color of lamp
      */
     public void setColor(float value) {
-        if (value > 1.0f) value = 1.0f;
+        if (value > 100.0f) value = 100.0f;
         if (value < 0.0f) value = 0.0f;
-        this.hue = value;
-        lampColor = Color.getHSBColor(value, saturation, brightness);
+        this.hue = value / 100;
+        lampColor = Color.getHSBColor(this.hue, saturation, brightness);
         lamp.setColor(lampColor);
     }
 

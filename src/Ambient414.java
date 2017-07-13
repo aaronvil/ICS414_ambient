@@ -27,7 +27,7 @@ public class Ambient414 {
         Slider maxSlider = new Slider(W_WIDTH / 2, W_HEIGHT - 200, 50, W_WIDTH - 200, 20, "Max Value", 0.75f, 25000);
 
         //Data Class for PineFlatData
-        PineFlatData dataTest = new PineFlatData((int) (100 * minSlider.getSliderValue()), (int) (100 * maxSlider.getSliderValue()));
+        PineFlatData pineFlatData = new PineFlatData((int) (100 * minSlider.getSliderValue()), (int) (100 * maxSlider.getSliderValue()));
 
         //Variables ot be used within the main loop of program
         int mouseX;
@@ -72,10 +72,14 @@ public class Ambient414 {
                     device.setBrightness(maxSlider.getSliderValue());
                 }
 
-                dataTest.setMinMax((int)minSlider.getNormalizedSliderValue(), (int)maxSlider.getNormalizedSliderValue());
+                pineFlatData.setMinMax((int)minSlider.getNormalizedSliderValue(), (int)maxSlider.getNormalizedSliderValue());
             }
 
-            System.out.println(dataTest.getBrightnessValue());
+            //Set Device Color to Orange if Data is bad
+            if(pineFlatData.isDataGood()) {
+                device.setColor(10);
+            }
+
         } //End of main program loop
 
         System.exit(0);
