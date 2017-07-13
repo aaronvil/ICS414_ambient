@@ -1,11 +1,13 @@
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Ambient project for ICS414 Summer 2017.
  * Created by Ryan Theriot and Aaron Jhumar Villanueva.
- * <p>
+ *
  * Dylan Kobayashi 's EZGraphics library used for UI and graphics.
  */
 public class Ambient414 {
@@ -22,12 +24,13 @@ public class Ambient414 {
 
         //Create the title, ambient device (virtual lamp), color slider and brightness slider
         EZText title = EZ.addText(W_WIDTH / 2, 150, "Ambient Device", Color.BLACK, 50);
+        EZText warning = EZ.addText(W_WIDTH / 2, 200, "Data Unavailable", Color.red, 35);
         AmbientDevice device = new AmbientDevice(W_WIDTH / 2, W_HEIGHT / 2 - 50, 250);
-        Slider minSlider = new Slider(W_WIDTH / 2, W_HEIGHT - 100, 50, W_WIDTH - 200, 20, "Min Value", 0.25f, 25000);
-        Slider maxSlider = new Slider(W_WIDTH / 2, W_HEIGHT - 200, 50, W_WIDTH - 200, 20, "Max Value", 0.75f, 25000);
+        Slider minSlider = new Slider(W_WIDTH / 2, W_HEIGHT - 100, W_WIDTH - 200, 50, 20, "Min Value", 0, 25000, 12000);
+        Slider maxSlider = new Slider(W_WIDTH / 2, W_HEIGHT - 200, W_WIDTH - 200, 50, 20, "Max Value", 0, 25000, 18000);
 
         //Data Class for PineFlatData
-        PineFlatData pineFlatData = new PineFlatData((int) (100 * minSlider.getSliderValue()), (int) (100 * maxSlider.getSliderValue()));
+        PineFlatData pineFlatData = new PineFlatData(minSlider.getSliderValue(), maxSlider.getSliderValue());
 
         //Variables ot be used within the main loop of program
         int mouseX;
@@ -35,7 +38,23 @@ public class Ambient414 {
         boolean leftMouseDown;
         boolean exit = false;
 
+        //Setup a timer to update data every 5 minutes.
+        //Used the following tutorial (http://singletonjava.blogspot.com/2016/02/java-timer-example.html)
+        //First data retrieval should be performed in data's constructor (ie: PineFlatData)
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    pineFlatData.getData();
+                } catch(IOException e) {};
+            }
+        };
+        long fiveMins = 1000 * 60 * 5;
+        timer.schedule(task, fiveMins, fiveMins);
 
+        minSlider.setSliderPositionByValue(pineFlatData.getUserMin());
+        maxSlider.setSliderPositionByValue(pineFlatData.getUserMax());
 
         //Main program loop
         while (!exit) {
@@ -55,29 +74,33 @@ public class Ambient414 {
 
                 //If mouse within color slider adjust slider and lamp color
                 if (minSlider.getSlider().isPointInElement(mouseX, mouseY)) {
-                    if (maxSlider.getSlider().getXCenter() < minSlider.getSlider().getXCenter()) {
-                        maxSlider.setSliderPosition(minSlider.getSlider().getXCenter() + 5);
-                    }
                     minSlider.setSliderPosition(mouseX);
-                    device.setColor(minSlider.getSliderValue());
-
+                    device.setColor(pineFlatData.getBrightnessValue());
+                    if (maxSlider.getSlider().getXCenter() < minSlider.getSlider().getXCenter()) {
+                        maxSlider.setSliderPosition(minSlider.getSlider().getXCenter() + 1);
+                    }
                 }
 
                 //If mouse within brightness slider adjust slider and lamp brightness
                 if (maxSlider.getSlider().isPointInElement(mouseX, mouseY)) {
-                    if (minSlider.getSlider().getXCenter() > maxSlider.getSlider().getXCenter()) {
-                        minSlider.setSliderPosition(maxSlider.getSlider().getXCenter() - 5);
-                    }
                     maxSlider.setSliderPosition(mouseX);
-                    device.setBrightness(maxSlider.getSliderValue());
+                    if (minSlider.getSlider().getXCenter() > maxSlider.getSlider().getXCenter()) {
+                        minSlider.setSliderPosition(maxSlider.getSlider().getXCenter() - 1);
+                    }
                 }
-
-                pineFlatData.setMinMax((int)minSlider.getNormalizedSliderValue(), (int)maxSlider.getNormalizedSliderValue());
+                pineFlatData.setMinMax(minSlider.getSliderValue(), maxSlider.getSliderValue());
             }
 
             //Set Device Color to Orange if Data is bad
-            if(pineFlatData.isDataGood()) {
-                device.setColor(10);
+            //Show warning text just for debugging
+            if(!pineFlatData.isDataGood()) {
+                device.setBrightness(pineFlatData.getBrightnessValue());
+                device.setColor(pineFlatData.getColorValue());
+                warning.hide();
+            }
+            else {
+                device.setColor(70);
+                warning.show();
             }
 
         } //End of main program loop

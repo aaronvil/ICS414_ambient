@@ -6,10 +6,11 @@ import java.awt.Color;
  */
 public class Slider {
 
-    private float value;
-    private int normalizedValue;
+    private int value;
+    private float normalizedValue;
     private int length;
-    private int xPos, yPos, xMin, xMax;
+    private int xCenter, yCenter, xMin, xMax;
+    private int minValue, maxValue;
 
     private EZRectangle sliderBackground;
     private EZCircle sliderKnob;
@@ -22,39 +23,44 @@ public class Slider {
      * Horizontal slider only currently.
      * @param xPosition X Coordinate position of the slider. This is the center of device.
      * @param yPosition Y Coordinate position of the slider. This is the center of device.
+     * @param sliderLength Length of the whole slider
      * @param radius Radius of the slider knob
-     * @param length Length of the whole slider
      * @param fontSize Font size of the text within the slider
      * @param label Label text. Centered and above the slider
-     * @param startValue Starting value of he slider
+     * @param startValue Starting value of the slider.
      */
-    public Slider(int xPosition, int yPosition, int radius, int length, int fontSize, String label, float startValue, int normValue) {
-        xPos = xPosition;
-        yPos = yPosition;
-        this.length = length;
+    public Slider(int xPosition, int yPosition, int sliderLength, int radius, int fontSize, String label, int minVal, int maxVal, int startValue) {
+        xCenter = xPosition;
+        yCenter = yPosition;
+        length = sliderLength;
+        maxValue = maxVal;
+        minValue = minVal;
         value = startValue;
-        this.normalizedValue = normValue;
 
-        if (value > 1.0f) value = 1.0f;
-        if (value < 0.0f) value = 0.0f;
+        if (value < minValue) value = minValue;
+        if (value > maxValue) value = maxValue;
+        normalizedValue = (float)(value - minValue) / (float)(maxValue - minValue);
 
-        xMin = xPos - (length / 2);
-        xMax = xPos + (length / 2);
-        int knobXPos = xMin + (int) (value * length);
+        xMin = xCenter - (length / 2);
+        xMax = xCenter + (length / 2);
+        int knobXPos = xMin + (int)(normalizedValue * length);
 
         sliderBackground = EZ.addRectangle(xPosition, yPosition, this.length, 10, Color.gray, true);
-        sliderKnob = EZ.addCircle(knobXPos, yPos, radius, radius, knobColor, true);
-        valueText = EZ.addText(knobXPos, yPos, String.valueOf((int) (value * normalizedValue)), Color.white, fontSize);
-        EZ.addText(knobXPos, yPos - radius, label, Color.BLACK, (int) (fontSize * 1.25f));
+
+        sliderKnob = EZ.addCircle(knobXPos, yCenter, radius, radius, knobColor, true);
+
+        valueText = EZ.addText(knobXPos, yCenter, String.valueOf(value), Color.white, fontSize);
+        EZ.addText(xCenter, yCenter - radius, label, Color.BLACK, (int) (fontSize * 1.25f));
     }
 
     /**
      * Getter for the slider value
      * @return The slider's current value
      */
-    public float getSliderValue() {
+    public int getSliderValue() {
         return value;
     }
+
 
     public float getNormalizedSliderValue() { return value * normalizedValue; }
 
@@ -68,8 +74,17 @@ public class Slider {
         if (xPosition < xMin) xPosition = xMin;
         sliderKnob.translateTo(xPosition, sliderKnob.getYCenter());
         valueText.translateTo(xPosition, valueText.getYCenter());
-        float newValue = ((float) xPosition - xMin) / (xMax - xMin);
-        setSliderValue(newValue);
+        normalizedValue = (float)(xPosition - xMin) / (float)(xMax - xMin);
+        float newValue = (float)(maxValue - minValue) * normalizedValue;
+        setSliderValue((int)newValue);
+    }
+
+    public void setSliderPositionByValue(int updatedValue) {
+        if (updatedValue < minValue) updatedValue = minValue;
+        if (updatedValue > maxValue) updatedValue = maxValue;
+        normalizedValue = (float)(updatedValue - minValue) / (float)(maxValue - minValue);
+        int knobXPos = xMin + (int)(normalizedValue * length);
+        setSliderPosition(knobXPos);
     }
 
     /**
@@ -77,11 +92,11 @@ public class Slider {
      * Text will displays values between 0.0 and 100.0
      * @param value The value to set the knob to
      */
-    private void setSliderValue(float value) {
-        if (value > 1.0f) this.value = 1.0f;
-        if (value < 0.0f) this.value = 0.0f;
+    private void setSliderValue(int value) {
+        if (value > maxValue) value = maxValue;
+        if (value < minValue) value = minValue;
         this.value = value;
-        valueText.setMsg(String.format("%.1f", value * normalizedValue));
+        valueText.setMsg(String.valueOf(value));
     }
 
     /**
