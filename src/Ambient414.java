@@ -22,25 +22,31 @@ public class Ambient414 {
         EZ.initialize(W_WIDTH, W_HEIGHT);
         EZ.setBackgroundColor(Color.LIGHT_GRAY);
 
-        //Create the title, ambient device (virtual lamp), color slider and brightness slider
-        EZText title = EZ.addText(W_WIDTH / 2, 150, "Ambient Device", Color.BLACK, 50);
+        //Create the title, ambient device (virtual lamp)
+        EZText title = EZ.addText(W_WIDTH / 2, 125, "Ambient Device", Color.BLACK, 50);
         EZText warning = EZ.addText(W_WIDTH / 2, 200, "Data Unavailable", Color.red, 35);
         AmbientDevice device = new AmbientDevice(W_WIDTH / 2, W_HEIGHT / 2 - 50, 250);
-        Slider minSlider = new Slider(W_WIDTH / 2, W_HEIGHT - 100, W_WIDTH - 200, 50, 20, "Min Value", 0, 25000, 12000);
-        Slider maxSlider = new Slider(W_WIDTH / 2, W_HEIGHT - 200, W_WIDTH - 200, 50, 20, "Max Value", 0, 25000, 18000);
 
-        //Data Class for PineFlatData
-        PineFlatData pineFlatData = new PineFlatData(minSlider.getSliderValue(), maxSlider.getSliderValue());
+        //Data Class for PineFlatData that retrieves the PineFlat data
+        PineFlatData pineFlatData = new PineFlatData();
 
-        //Variables ot be used within the main loop of program
-        int mouseX;
-        int mouseY;
-        boolean leftMouseDown;
-        boolean exit = false;
+        //Set up sliders so the user's can set the Min and Max Values
+        //minVal and maxVal were given by the teacher for this data set
+        Slider minSlider = new Slider(W_WIDTH / 2, W_HEIGHT - 125, W_WIDTH - 200, 50, 20, "Min Value", 0, 25000, 0);
+        Slider maxSlider = new Slider(W_WIDTH / 2, W_HEIGHT - 225, W_WIDTH - 200, 50, 20, "Max Value", 0, 25000, 25000);
 
-        //Setup a timer to update data every 5 minutes.
-        //Used the following tutorial (http://singletonjava.blogspot.com/2016/02/java-timer-example.html)
+        //Set the values of sliders by the min and max values for the data
+        pineFlatData.setIdealMinMax();
+        minSlider.setSliderPositionByValue(pineFlatData.getMinValue());
+        maxSlider.setSliderPositionByValue(pineFlatData.getMaxValue());
+
+        //Setup button the user can press to set ideal values
+        EZRectangle setIdealMinMaxButton = EZ.addRectangle(W_WIDTH / 2, W_HEIGHT -50, 200, 50, new Color(0, 89, 239), true);
+        EZ.addText(W_WIDTH / 2, W_HEIGHT -50, "Reset Sliders", Color.white, 20);
+
+        //Setup a timer to update data every 30 minutes.
         //First data retrieval should be performed in data's constructor (ie: PineFlatData)
+        //Used the following tutorial (http://singletonjava.blogspot.com/2016/02/java-timer-example.html)
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
@@ -50,11 +56,14 @@ public class Ambient414 {
                 } catch(IOException e) {};
             }
         };
-        long fiveMins = 1000 * 60 * 5;
-        timer.schedule(task, fiveMins, fiveMins);
+        long thirtyMins = 1000 * 60 * 30;
+        timer.schedule(task, thirtyMins, thirtyMins);
 
-        minSlider.setSliderPositionByValue(pineFlatData.getUserMin());
-        maxSlider.setSliderPositionByValue(pineFlatData.getUserMax());
+        //Variables to be used within the main loop of program
+        int mouseX;
+        int mouseY;
+        boolean leftMouseDown;
+        boolean exit = false;
 
         //Main program loop
         while (!exit) {
@@ -88,18 +97,29 @@ public class Ambient414 {
                         minSlider.setSliderPosition(maxSlider.getSlider().getXCenter() - 1);
                     }
                 }
+                //Set the min and max of data set
                 pineFlatData.setMinMax(minSlider.getSliderValue(), maxSlider.getSliderValue());
+
+                //Check if the Rest Sliders button has been selected
+                //This resets the sliders to an ideal position
+                if (setIdealMinMaxButton.isPointInElement(mouseX, mouseY)) {
+                    pineFlatData.setIdealMinMax();
+                    minSlider.setSliderPositionByValue(pineFlatData.getMinValue());
+                    maxSlider.setSliderPositionByValue(pineFlatData.getMaxValue());
+                }
             }
 
-            //Set Device Color to Orange if Data is bad
+            //Set Device color to BLUE if outflow is greater
+            //Set Device color to RED if inflow is greater
+            //Set to YELLOW if Data is bad
             //Show warning text just for debugging
-            if(!pineFlatData.isDataGood()) {
+            if(pineFlatData.isDataGood()) {
                 device.setBrightness(pineFlatData.getBrightnessValue());
                 device.setColor(pineFlatData.getColorValue());
                 warning.hide();
             }
             else {
-                device.setColor(70);
+                device.setColor(20);
                 warning.show();
             }
 

@@ -61,9 +61,6 @@ public class Slider {
         return value;
     }
 
-
-    public float getNormalizedSliderValue() { return value * normalizedValue; }
-
     /**
      * Set the slider position on the screen.
      * This method is used to also set the slider value.
@@ -79,6 +76,11 @@ public class Slider {
         setSliderValue((int)newValue);
     }
 
+    /**
+     * Method to se the position of the slider by value
+     * Need to know the min and max values of your data to be used
+     * @param updatedValue The new value the slider should be associated with
+     */
     public void setSliderPositionByValue(int updatedValue) {
         if (updatedValue < minValue) updatedValue = minValue;
         if (updatedValue > maxValue) updatedValue = maxValue;

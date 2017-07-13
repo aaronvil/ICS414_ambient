@@ -34,7 +34,7 @@ public class AmbientDevice {
     }
 
     /**
-     * Setter for the brightness of the lamp with a value between 0.0-100.0
+     * Setter for the brightness of the lamp with a value between 0-100
      * @param value Brightness of lamp
      */
     public void setBrightness(int value) {
@@ -46,7 +46,7 @@ public class AmbientDevice {
     }
 
     /**
-     * Setter for the color of the lamp with a value between 0.0-100.0
+     * Setter for the color of the lamp with a value between 0-100
      * @param value Color of lamp
      */
     public void setColor(int value) {
@@ -57,12 +57,5 @@ public class AmbientDevice {
         lamp.setColor(lampColor);
     }
 
-    public float getBrightness() {
-        return brightness;
-    }
-
-    public float getHue() {
-        return hue;
-    }
 
 }
