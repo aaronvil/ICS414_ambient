@@ -109,27 +109,19 @@ public class Ambient414 {
                 }
             }
 
-            //Set Device color to BLUE if outflow is greater
+            //Set Device color to GREEN if outflow is greater
             //Set Device color to RED if inflow is greater
-            //Set Device color to GREEN if inflow==outflow
-            //Set to YELLOW if Data is bad
+            //Set Device color to Yellow if inflow==outflow
+            //Set to BLUE if Data is bad
             //Show warning text just for debugging
             if(pineFlatData.isDataGood()) {
-                if (pineFlatData.areFlowsTheSame())
-                {
-                    device.setBrightness(50);
-                    device.setColor(40);
-                    warning.hide();
-                }
-                else {
-                    device.setBrightness(pineFlatData.getBrightnessValue());
-                    device.setColor(pineFlatData.getColorValue());
-                    warning.hide();
-                }
-
+                //Removed brightness for now
+                //device.setBrightness(pineFlatData.getBrightnessValue());
+                device.setColor(pineFlatData.getColorValue());
+                warning.hide();
             }
             else {
-                device.setColor(20);
+                device.setColor(70);
                 warning.show();
             }
 

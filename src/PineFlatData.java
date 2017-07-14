@@ -140,21 +140,13 @@ public class PineFlatData {
      */
     public int getColorValue() {
         int difference = currentOutflowValue - currentInflowValue;
-        //Outflow is greater
-        if (difference > 0) {
-            difference = Math.abs(difference);
-            int maxRange = dataMax - dataMin + 1;
-            float normVal = (float) difference / (float) maxRange;
-            int value = (int) (normVal * 10);
-            return value + 60;
-        } else {
-            difference = Math.abs(difference);
-            int maxRange = dataMax - dataMin + 1;
-            float normVal = (float) difference / (float) maxRange;
-            int value = (int) (normVal * 10);
-            return value + 90;
-        }
+        int maxRange = dataMax - dataMin + 1;
+        float normVal = (float) difference / (float) maxRange;
+        normVal = Math.max(-1.0f, Math.min(1.0f, normVal)); //Dont let normval go above 1.0 or below -1.0
+        int value = (int) (normVal * 20);
+        return 15 + value; //Middle color is yellow
     }
+
     public boolean areFlowsTheSame() {
         return (currentOutflowValue == currentInflowValue);
     }
