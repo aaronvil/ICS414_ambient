@@ -7,7 +7,7 @@ import java.util.TimerTask;
 /**
  * Ambient project for ICS414 Summer 2017.
  * Created by Ryan Theriot and Aaron Jhumar Villanueva.
- *
+ * <p>
  * Dylan Kobayashi 's EZGraphics library used for UI and graphics.
  */
 public class Ambient414 {
@@ -41,8 +41,8 @@ public class Ambient414 {
         maxSlider.setSliderPositionByValue(pineFlatData.getMaxValue());
 
         //Setup button the user can press to set ideal values
-        EZRectangle setIdealMinMaxButton = EZ.addRectangle(W_WIDTH / 2, W_HEIGHT -50, 200, 50, new Color(0, 89, 239), true);
-        EZ.addText(W_WIDTH / 2, W_HEIGHT -50, "Reset Sliders", Color.white, 20);
+        EZRectangle setIdealMinMaxButton = EZ.addRectangle(W_WIDTH / 2, W_HEIGHT - 50, 200, 50, new Color(0, 89, 239), true);
+        EZ.addText(W_WIDTH / 2, W_HEIGHT - 50, "Reset Sliders", Color.white, 20);
 
         //Setup a timer to update data every 30 minutes.
         //First data retrieval should be performed in data's constructor (ie: PineFlatData)
@@ -53,7 +53,9 @@ public class Ambient414 {
             public void run() {
                 try {
                     pineFlatData.getData();
-                } catch(IOException e) {};
+                } catch (IOException e) {
+                }
+                ;
             }
         };
         long thirtyMins = 1000 * 60 * 30;
@@ -114,13 +116,12 @@ public class Ambient414 {
             //Set Device color to Yellow if inflow==outflow
             //Set to BLUE if Data is bad
             //Show warning text just for debugging
-            if(pineFlatData.isDataGood()) {
+            if (pineFlatData.isDataGood()) {
                 //Removed brightness for now
                 //device.setBrightness(pineFlatData.getBrightnessValue());
                 device.setColor(pineFlatData.getColorValue());
                 warning.hide();
-            }
-            else {
+            } else {
                 device.setColor(70);
                 warning.show();
             }

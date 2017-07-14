@@ -10,10 +10,12 @@ The current iteration tracks the US Army corps of Engineers King River Basin Dat
 
 The Ambient device changes color to indicate the Pine Flat outflow and inflow status.  
 
-When the lamp is BLUE the outflow is greater than the inflow and all is well.  
+When the lamp is GREEN the outflow is greater than the inflow and all is well.  
 When the lamp is RED the inflow is greater than the outflow and all is not well.  
-Green indicates the flows are exactly the same.  
-Yellow indicates the data source is not available.  
+When the lamp is YELLOW the flows are around the same.  
+BLUE indicates the data source is not available.  
+
+The colors are on a gradient scale. So a stronger color green means more outflow.
 
 ![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/ryan-assignment2/doc/images/outflow-greater.png)  
  
