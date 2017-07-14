@@ -11,14 +11,17 @@ The current iteration tracks the US Army corps of Engineers King River Basin Dat
 The Ambient device changes color to indicate the Pine Flat outflow and inflow status.  
 
 When the lamp is BLUE the outflow is greater than the inflow and all is well.  
-Weh the lamp is RED the inflow is greater than the outflow and all is not well.  
+When the lamp is RED the inflow is greater than the outflow and all is not well.  
 Green indicates the flows are exactly the same.  
 Yellow indicates the data source is not available.  
 
 ![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/ryan-assignment2/doc/images/outflow-greater.png)  
-![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/ryan-assignment2/doc/images/inflow-greater.png)
-![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/ryan-assignment2/doc/images/flows-same.png)
-![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/ryan-assignment2/doc/images/no-date.png)
+ 
+![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/ryan-assignment2/doc/images/inflow-greater.png)  
+
+![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/ryan-assignment2/doc/images/flows-same.png)  
+
+![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/ryan-assignment2/doc/images/no-date.png)  
 
 ## Interface Controls
 The Min and Max Sliders allow you to change the min and max flow values.  
@@ -29,7 +32,3 @@ It is best to click this button and then adjust the sliders accordingly.
 
 ## EZGraphics
 We use [EZGraphics](http://www2.hawaii.edu/~dylank/ics111/) for the UI and Graphics which is developed by Dylan Kobayashi.
-
-
-
-![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/comments-tests/doc/images/assignment1.png)
