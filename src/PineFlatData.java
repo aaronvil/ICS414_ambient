@@ -155,6 +155,9 @@ public class PineFlatData {
             return value + 90;
         }
     }
+    public boolean areFlowsTheSame() {
+        return (currentOutflowValue == currentInflowValue);
+    }
 
     public boolean isDataGood() {
         return dataIsGood;
