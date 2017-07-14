@@ -114,7 +114,7 @@ public class Ambient414 {
             //Set Device color to GREEN if inflow==outflow
             //Set to YELLOW if Data is bad
             //Show warning text just for debugging
-            if(pineFlatData.isDataGood()) {
+            if(!pineFlatData.isDataGood()) {
                 if (pineFlatData.areFlowsTheSame())
                 {
                     device.setBrightness(50);
