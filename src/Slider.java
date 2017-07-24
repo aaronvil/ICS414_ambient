@@ -24,12 +24,10 @@ public class Slider {
      * @param xPosition X Coordinate position of the slider. This is the center of device.
      * @param yPosition Y Coordinate position of the slider. This is the center of device.
      * @param sliderLength Length of the whole slider
-     * @param radius Radius of the slider knob
-     * @param fontSize Font size of the text within the slider
      * @param label Label text. Centered and above the slider
      * @param startValue Starting value of the slider.
      */
-    public Slider(int xPosition, int yPosition, int sliderLength, int radius, int fontSize, String label, int minVal, int maxVal, int startValue) {
+    public Slider(int xPosition, int yPosition, int sliderLength, String label, int minVal, int maxVal, int startValue) {
         xCenter = xPosition;
         yCenter = yPosition;
         length = sliderLength;
@@ -47,10 +45,9 @@ public class Slider {
 
         sliderBackground = EZ.addRectangle(xPosition, yPosition, this.length, 10, Color.gray, true);
 
-        sliderKnob = EZ.addCircle(knobXPos, yCenter, radius, radius, knobColor, true);
-
-        valueText = EZ.addText(knobXPos, yCenter, String.valueOf(value), Color.white, fontSize);
-        EZ.addText(xCenter, yCenter - radius, label, Color.BLACK, (int) (fontSize * 1.25f));
+        sliderKnob = EZ.addCircle(knobXPos, yCenter, 50, 50, knobColor, true);
+        valueText = EZ.addText(knobXPos, yCenter, String.valueOf(value), Color.white, 20);
+        EZ.addText(xCenter, yCenter - 50, label, Color.BLACK, (int) (20 * 1.25f));
     }
 
     /**
@@ -99,6 +96,19 @@ public class Slider {
         if (value < minValue) value = minValue;
         this.value = value;
         valueText.setMsg(String.valueOf(value));
+    }
+
+    public void resetSlider(int minVal, int maxVal, int currentValue) {
+        maxValue = maxVal;
+        minValue = minVal;
+        value = currentValue;
+        if (value < minValue) value = minValue;
+        if (value > maxValue) value = maxValue;
+        normalizedValue = (float)(value - minValue) / (float)(maxValue - minValue);
+        xMin = xCenter - (length / 2);
+        xMax = xCenter + (length / 2);
+        int knobXPos = xMin + (int)(normalizedValue * length);
+        setSliderPosition(knobXPos);
     }
 
     /**
