@@ -41,8 +41,11 @@ public class Ambient414 {
         EZ.addText(500, 50, "Third", Color.white, 20);
 
         //Setup PineFlat Fourth Source
-        EZRectangle fourthSelector = EZ.addRectangle(700, 50, 100, 50, new Color(239, 205, 66), true);
-        EZ.addText(700, 50, "Fourth", Color.white, 20);
+        BingTraffic bingTraffic = new BingTraffic(5);
+        bingTraffic.setIdealMinMax();
+        EZRectangle bingSelector = EZ.addRectangle(700, 50, 100, 50, new Color(239, 205, 66), true);
+        EZ.addText(700, 50, "Bing Traffic", Color.white, 20);
+
 
         //Set the current data source to Pine Flat
         DataSource currentSource;
@@ -86,6 +89,12 @@ public class Ambient414 {
 
                 if (tempSelector.isPointInElement(mouseX, mouseY)) {
                     currentSource = pineFlatTemp;
+                    minSlider.resetSlider(currentSource.getMin(), currentSource.getMax(), currentSource.getMinValue());
+                    maxSlider.resetSlider(currentSource.getMin(), currentSource.getMax(), currentSource.getMaxValue());
+                }
+
+                if (bingSelector.isPointInElement(mouseX, mouseY)) {
+                    currentSource = bingTraffic;
                     minSlider.resetSlider(currentSource.getMin(), currentSource.getMax(), currentSource.getMinValue());
                     maxSlider.resetSlider(currentSource.getMin(), currentSource.getMax(), currentSource.getMaxValue());
                 }
