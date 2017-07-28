@@ -12,7 +12,6 @@ import org.json.simple.parser.ParseException;
  */
 public class SteamApi implements DataSource {
 
-  private  float currentTravelTime;
   private int dataMax;
   private int dataMin;
   private int maxValue = 150;
@@ -21,9 +20,13 @@ public class SteamApi implements DataSource {
   private int online = 0;
   private int playing = 0;
   private String userID = "76561198043369431";
+  private String gameMatch = "Mini Metro";
 
+  /**
+   * Constructor
+   * @param updateInterval - interval that it updates the data.
+   */
   public SteamApi(int updateInterval) {
-    currentTravelTime = 0;
     dataIsGood = false;
     getData();
     //Setup a timer to update data every 30 minutes.
@@ -40,6 +43,10 @@ public class SteamApi implements DataSource {
     timer.schedule(task, interval, interval);
   }
 
+  /**
+   * Gets the data from steam api that goes through friends list and see who is online and if they are playing a certain game. If friends are online, variable online increases. If they
+   * are playing the gameMatch, then playing increases.
+   */
   @Override
   public void getData() {
     JSONParser parser = new JSONParser();
@@ -58,7 +65,6 @@ public class SteamApi implements DataSource {
       for (int i = 0; i < friends.size(); i++) {
         JSONObject id = (JSONObject) friends.get(i);
         String friendID = (String) id.get("steamid");
-        //Object friendSummeryJSON = parser.parse(getHTML("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=D395BCB6A9C1101D98963107D2AA8AAA&steamids=" + steamid));
 
         URL summeryURL = new URL("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=D395BCB6A9C1101D98963107D2AA8AAA&steamids=" + friendID);
         HttpURLConnection summeryCon = (HttpURLConnection) summeryURL.openConnection();
@@ -75,7 +81,7 @@ public class SteamApi implements DataSource {
           online++;
           String game = (String) info.get("gameextrainfo");
           if (game != null) {
-            if (game.equals("Mini Metro")) {
+            if (game.equals(gameMatch)) {
               playing++;
             }
           }
@@ -87,6 +93,11 @@ public class SteamApi implements DataSource {
     }
   }
 
+  /**
+   * Sets the min and max
+   * @param min Minmimum value the user sets
+   * @param max Maximum value the user sets
+   */
   @Override
   public void setMinMax(int min, int max) {
     dataMin = min;
@@ -94,14 +105,25 @@ public class SteamApi implements DataSource {
     if (dataMax < dataMin) dataMax = dataMin + 1;
   }
 
+  /**
+   * sets min and max to ideal
+   */
   @Override
   public void setIdealMinMax() { setMinMax(35, 75); }
 
+  /**
+   * sets the brightness value of the color
+   * @return brightness, stuck at 100 since only color changes.
+   */
   @Override
   public int getBrightnessValue() {
     return 100;
   }
 
+  /**
+   * set color value
+   * @return the color value based on status
+   */
   @Override
   public int getColorValue() {
     if(online > 0) {
@@ -116,26 +138,46 @@ public class SteamApi implements DataSource {
     return 0;
   }
 
+  /**
+   * tells if the data retrieved is good.
+   * @return true if data had not error in retrieving else false
+   */
   @Override
   public boolean isDataGood() {
     return dataIsGood;
   }
 
+  /**
+   * Gets the min value
+   * @return the min value of the data
+   */
   @Override
   public int getMinValue() {
     return dataMin;
   }
 
+  /**
+   * gets the max value
+   * @return max value of data
+   */
   @Override
   public int getMaxValue() {
     return dataMax;
   }
 
+  /**
+   * gets user max
+   * @return return user max
+   */
   @Override
   public int getMax() {
     return maxValue;
   }
 
+  /**
+   * gets user min
+   * @return returns user min
+   */
   @Override
   public int getMin() {
     return minValue;
