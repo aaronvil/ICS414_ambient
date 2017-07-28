@@ -37,8 +37,9 @@ public class Ambient414 {
         EZ.addText(300, 50, "Temp", Color.white, 20);
 
         //Setup PineFlat Third Source
-        EZRectangle thirdSelector = EZ.addRectangle(500, 50, 100, 50, new Color(239, 80, 120), true);
-        EZ.addText(500, 50, "Third", Color.white, 20);
+        SteamApi steamapi = new SteamApi(5);
+        EZRectangle steamSelector = EZ.addRectangle(500, 50, 100, 50, new Color(239, 80, 120), true);
+        EZ.addText(500, 50, "Online Steam Friends", Color.white, 20);
 
         //Setup PineFlat Fourth Source
         BingTraffic bingTraffic = new BingTraffic(5);
