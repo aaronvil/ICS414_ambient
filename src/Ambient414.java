@@ -30,23 +30,23 @@ public class Ambient414 {
         EZRectangle flowSelector = EZ.addRectangle(100, 50, 100, 50, new Color(80, 239, 174), true);
         EZ.addText(100, 50, "Flow", Color.white, 20);
 
-        //Setup PineFlat Tamp Source
+        //Setup PineFlat Water Temp Source
         PineFlatWaterTemp pineFlatTemp = new PineFlatWaterTemp(5);
         pineFlatTemp.setIdealMinMax();
         EZRectangle tempSelector = EZ.addRectangle(300, 50, 100, 50, new Color(122, 149, 239), true);
         EZ.addText(300, 50, "Temp", Color.white, 20);
 
-        //Setup PineFlat Third Source
-        SteamApi steamapi = new SteamApi(5);
+        //Setup Steam source
+        SteamApi steamapi = new SteamApi(1);
+        steamapi.setIdealMinMax();
         EZRectangle steamSelector = EZ.addRectangle(500, 50, 100, 50, new Color(239, 80, 120), true);
-        EZ.addText(500, 50, "Online Steam Friends", Color.white, 20);
+        EZ.addText(500, 50, "Steam", Color.white, 20);
 
         //Setup PineFlat Fourth Source
         BingTraffic bingTraffic = new BingTraffic(5);
         bingTraffic.setIdealMinMax();
         EZRectangle bingSelector = EZ.addRectangle(700, 50, 100, 50, new Color(239, 205, 66), true);
         EZ.addText(700, 50, "Bing Traffic", Color.white, 20);
-
 
         //Set the current data source to Pine Flat
         DataSource currentSource;
@@ -94,6 +94,13 @@ public class Ambient414 {
                     maxSlider.resetSlider(currentSource.getMin(), currentSource.getMax(), currentSource.getMaxValue());
                 }
 
+
+                if (steamSelector.isPointInElement(mouseX, mouseY)) {
+                    currentSource = steamapi;
+                    minSlider.resetSlider(currentSource.getMin(), currentSource.getMax(), currentSource.getMinValue());
+                    maxSlider.resetSlider(currentSource.getMin(), currentSource.getMax(), currentSource.getMaxValue());
+                }
+
                 if (bingSelector.isPointInElement(mouseX, mouseY)) {
                     currentSource = bingTraffic;
                     minSlider.resetSlider(currentSource.getMin(), currentSource.getMax(), currentSource.getMinValue());
@@ -119,7 +126,7 @@ public class Ambient414 {
                 //Set the min and max of data set
                 currentSource.setMinMax(minSlider.getSliderValue(), maxSlider.getSliderValue());
 
-                //Check if the Rest Sliders button has been selected
+                //Check if the reset sliders button has been selected
                 //This resets the sliders to an ideal position
                 if (setIdealMinMaxButton.isPointInElement(mouseX, mouseY)) {
                     currentSource.setIdealMinMax();
@@ -128,18 +135,15 @@ public class Ambient414 {
                 }
             }
 
-            //Set Device color to GREEN if outflow is greater
-            //Set Device color to RED if inflow is greater
-            //Set Device color to Yellow if inflow==outflow
-            //Set to BLUE if Data is bad
+            //Check if data source is good.
+            //If not turn lamp off.
             //Show warning text just for debugging
             if (currentSource.isDataGood()) {
-                //Removed brightness for now
                 device.setBrightness(currentSource.getBrightnessValue());
                 device.setColor(currentSource.getColorValue());
                 warning.hide();
             } else {
-                device.setColor(70);
+                device.setBrightness(0);
                 warning.show();
             }
 

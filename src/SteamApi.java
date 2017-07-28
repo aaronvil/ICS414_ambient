@@ -14,7 +14,7 @@ public class SteamApi implements DataSource {
 
   private int dataMax;
   private int dataMin;
-  private int maxValue = 150;
+  private int maxValue = 100;
   private int minValue = 0;
   private boolean dataIsGood;
   private int online = 0;
@@ -62,6 +62,7 @@ public class SteamApi implements DataSource {
       JSONObject friendsList = (JSONObject) friendListData.get("friendslist");
       JSONArray friends = (JSONArray) friendsList.get("friends");
       //Gets the list of steam id
+      System.out.println(friends.size());
       for (int i = 0; i < friends.size(); i++) {
         JSONObject id = (JSONObject) friends.get(i);
         String friendID = (String) id.get("steamid");
@@ -91,6 +92,7 @@ public class SteamApi implements DataSource {
       System.out.println("Steam Data Unavailable");
       dataIsGood = false;
     }
+    dataIsGood = true;
   }
 
   /**
@@ -109,7 +111,7 @@ public class SteamApi implements DataSource {
    * sets min and max to ideal
    */
   @Override
-  public void setIdealMinMax() { setMinMax(35, 75); }
+  public void setIdealMinMax() { setMinMax(0, 100); }
 
   /**
    * sets the brightness value of the color

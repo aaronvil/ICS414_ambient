@@ -60,7 +60,6 @@ public class BingTraffic implements DataSource {
             jsonArray = (JSONArray) jsonObject.get("resources");
             jsonObject = (JSONObject) jsonArray.get(0);
 
-            System.out.println(jsonObject.get("travelDurationTraffic"));
             currentTravelTime = Float.parseFloat(jsonObject.get("travelDurationTraffic").toString());
             currentTravelTime /= 60.0f;
             dataIsGood = true;
