@@ -26,6 +26,10 @@ public class BingTraffic implements DataSource {
     private int minValue = 0;
     private boolean dataIsGood;
 
+    /**
+     * BingTraffic Constructor
+     * @param updateInterval Time interval in minutes of data updates
+     */
     public BingTraffic(int updateInterval) {
         currentTravelTime = 0;
         dataIsGood = false;
@@ -44,6 +48,9 @@ public class BingTraffic implements DataSource {
         timer.schedule(task, interval, interval);
     }
 
+    /**
+     * Update the Data
+     */
     public void getData() {
 
         try {
@@ -71,6 +78,12 @@ public class BingTraffic implements DataSource {
 
     }
 
+    /**
+     * Private class t o construct the Bing URL string
+     * @param org Origin
+     * @param dest Destination
+     * @return Bing URL to get traffic data
+     */
     private String getTrafficUrl (String org, String dest) {
         String trafficURL = "http://dev.virtualearth.net/REST/V1/Routes/Driving?wp.0=" + org +
                             "&wp.1="+ dest +
@@ -78,6 +91,10 @@ public class BingTraffic implements DataSource {
         return trafficURL;
     }
 
+    /**
+     * The color value to pass to the Ambient Device
+     * @return Color value between 0 - 100
+     */
     public int getColorValue() {
         if (dataMin > currentTravelTime) return 40;
         if (dataMax < currentTravelTime) return 0;
@@ -87,13 +104,16 @@ public class BingTraffic implements DataSource {
         return 40 - value;
     }
 
+    /**
+     * The brightness value to pass to the Ambient Device
+     * @return Brightness value between 0 - 100
+     */
     public int getBrightnessValue() {
         return 100;
     }
 
     /**
      * Set the min and max data values
-     *
      * @param min the minimum value the data should be
      * @param max the maximum vaue the data should be
      */
@@ -103,9 +123,6 @@ public class BingTraffic implements DataSource {
         if (dataMax < dataMin) dataMax = dataMin + 1;
     }
 
-    /**
-     * A helper method to set an ideal min and max data values based on the current readings
-     */
     public void setIdealMinMax() { setMinMax(35, 75); }
 
     public boolean isDataGood() {

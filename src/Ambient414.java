@@ -4,12 +4,11 @@ import java.awt.event.KeyEvent;
 /**
  * Ambient project for ICS414 Summer 2017.
  * Created by Ryan Theriot and Aaron Jhumar Villanueva.
- * <p>
  * Dylan Kobayashi 's EZGraphics library used for UI and graphics.
  */
 public class Ambient414 {
 
-    // Final Static Variables for EZWindow
+    // Static Variables for EZWindow
     public static final int W_WIDTH = 800;
     public static final int W_HEIGHT = 800;
 
@@ -23,6 +22,7 @@ public class Ambient414 {
         EZText title = EZ.addText(W_WIDTH / 2, 125, "Ambient Device", Color.BLACK, 50);
         EZText warning = EZ.addText(W_WIDTH / 2, 200, "Data Unavailable", Color.red, 35);
         AmbientDevice device = new AmbientDevice(W_WIDTH / 2, W_HEIGHT / 2 - 50, 250);
+        EZRectangle selector = EZ.addRectangle(100, 80, 100, 5, Color.white, true);
 
         //Setup PineFlat Flow Source
         PineFlatWaterFlow pineFlatFlow = new PineFlatWaterFlow(5);
@@ -65,7 +65,6 @@ public class Ambient414 {
         int mouseY;
         boolean leftMouseDown;
         boolean exit = false;
-        EZRectangle selector = EZ.addRectangle(100, 80, 100, 5, Color.white, true);
 
         //Main program loop
         while (!exit) {
@@ -96,7 +95,6 @@ public class Ambient414 {
                     maxSlider.resetSlider(currentSource.getMin(), currentSource.getMax(), currentSource.getMaxValue());
                     selector.translateTo(300, 80);
                 }
-
 
                 if (steamSelector.isPointInElement(mouseX, mouseY)) {
                     currentSource = steamapi;

@@ -8,7 +8,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 /**
- * Created by ajvil_000 on 7/27/2017.
+ * Class to obtain STEAM data
+ * Created by Aaron Jhumar Villanueva.
  */
 public class SteamApi implements DataSource {
 

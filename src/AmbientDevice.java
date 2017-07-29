@@ -14,7 +14,6 @@ public class AmbientDevice {
 
     /**
      * Constructor class of the Ambient Device
-     *
      * @param xPos   X Coordinate position of the lamp. This is the center of device.
      * @param yPos   Y Coordinate position of the lamp. This is the center of device.
      * @param Radius The radius of the lamp.
@@ -29,7 +28,6 @@ public class AmbientDevice {
 
     /**
      * Getter for the lamp EZCircle Object of the ambient device
-     *
      * @return lamp
      */
     public EZCircle getLamp() {
@@ -38,7 +36,6 @@ public class AmbientDevice {
 
     /**
      * Setter for the brightness of the lamp with a value between 0-100
-     *
      * @param value Brightness of lamp
      */
     public void setBrightness(int value) {
@@ -51,7 +48,6 @@ public class AmbientDevice {
 
     /**
      * Setter for the color of the lamp with a value between 0-100
-     *
      * @param value Color of lamp
      */
     public void setColor(int value) {

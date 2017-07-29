@@ -8,7 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * Created by Ryan on 7/24/2017.
+ * Class to obtain data from the US Army Corps of Engineers for the Pine Flat for Kings River
+ * http://www.spk-wc.usace.army.mil/fcgi-bin/hourly.py?report=pnf
+ * Created by Ryan Theriot and Aaron Jhumar Villanueva.
  */
 public class PineFlatWaterTemp implements DataSource {
 
@@ -35,7 +37,6 @@ public class PineFlatWaterTemp implements DataSource {
 
     /**
      * Constructor for the PineFlat data
-     *
      * @param updateInterval Update interval between data retrievals in minutes.
      */
     public PineFlatWaterTemp(int updateInterval) {
@@ -60,8 +61,6 @@ public class PineFlatWaterTemp implements DataSource {
 
     /**
      * Method to obtain the Data from the source
-     *
-     * @throws IOException
      */
     public void getData() {
 
@@ -121,7 +120,6 @@ public class PineFlatWaterTemp implements DataSource {
 
     /**
      * Set the min and max data values
-     *
      * @param min the minimum value the data should be
      * @param max the maximum vaue the data should be
      */
@@ -140,7 +138,6 @@ public class PineFlatWaterTemp implements DataSource {
 
     /**
      * Returns a value between 0-100 of the current brightness value
-     *
      * @return An int between 0-100 of the current brightness value
      */
     public int getBrightnessValue() {
@@ -149,7 +146,6 @@ public class PineFlatWaterTemp implements DataSource {
 
     /**
      * Returns a value between 0-100 of the current color value
-     *
      * @return An int between 0-100 of the current color value
      */
     public int getColorValue() {
