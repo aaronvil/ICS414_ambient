@@ -6,27 +6,30 @@ Ryan Theriot
 ##### An Ambient device that will track different data sources and show visual representations of the data's current state.
 
 ## Current Iteration
-The current iteration tracks the US Army corps of Engineers King River Basin Data.  
+The current iteration tracks the flowing data sources:  
+  - King River Basin Pine Flat Water Flow.  
+  - King River Basin Pine Flat Water Temperature.  
+  - Steam friends data.  
+  - Traffic data from home to school utilizing Bing.  
 
-The Ambient device changes color to indicate the Pine Flat outflow and inflow status.  
+The Ambient device changes color to indicate the selected data's status.
+You can select the different data sources with the top row of buttons.
+The user can then set the min and max values for each data source with the sliders. (Steam does not use sliders)
 
-When the lamp is GREEN the outflow is greater than the inflow and all is well.  
-When the lamp is RED the inflow is greater than the outflow and all is not well.  
-When the lamp is YELLOW the flows are around the same.  
-BLUE indicates the data source is not available.  
+![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/ryan-assignment2/doc/images/Application.png)
 
-The colors are on a gradient scale. So a stronger color green means more outflow.
+Below are the current data sources color charts.
 
-![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/ryan-assignment2/doc/images/outflow-greater.png)  
+![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/ryan-assignment2/doc/images/PineFlatFlow.png)  
  
-![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/ryan-assignment2/doc/images/inflow-greater.png)  
+![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/ryan-assignment2/doc/images/PineFlatTemp.png)  
 
-![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/ryan-assignment2/doc/images/flows-same.png)  
+![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/ryan-assignment2/doc/images/Steam.png)  
 
-![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/ryan-assignment2/doc/images/no-date.png)  
+![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/ryan-assignment2/doc/images/BingTraffic.png)  
 
 ## Interface Controls
-The Min and Max Sliders allow you to change the min and max flow values.  
+The Min and Max Sliders allow the user to change the min and max values.  
 
 The Reset Slider button sets the sliders to values that are ideal for the current data.  
 

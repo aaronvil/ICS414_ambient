@@ -128,7 +128,7 @@ public class SteamApi implements DataSource {
    */
   @Override
   public int getColorValue() {
-    if(online > 0) {
+    if (online > 0) {
       if (playing > 0){
         //friend is playing mini metro
         return 80;

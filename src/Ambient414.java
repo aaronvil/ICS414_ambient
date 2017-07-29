@@ -65,6 +65,7 @@ public class Ambient414 {
         int mouseY;
         boolean leftMouseDown;
         boolean exit = false;
+        EZRectangle selector = EZ.addRectangle(100, 80, 100, 5, Color.white, true);
 
         //Main program loop
         while (!exit) {
@@ -86,12 +87,14 @@ public class Ambient414 {
                     currentSource = pineFlatFlow;
                     minSlider.resetSlider(currentSource.getMin(), currentSource.getMax(), currentSource.getMinValue());
                     maxSlider.resetSlider(currentSource.getMin(), currentSource.getMax(), currentSource.getMaxValue());
+                    selector.translateTo(100, 80);
                 }
 
                 if (tempSelector.isPointInElement(mouseX, mouseY)) {
                     currentSource = pineFlatTemp;
                     minSlider.resetSlider(currentSource.getMin(), currentSource.getMax(), currentSource.getMinValue());
                     maxSlider.resetSlider(currentSource.getMin(), currentSource.getMax(), currentSource.getMaxValue());
+                    selector.translateTo(300, 80);
                 }
 
 
@@ -99,12 +102,14 @@ public class Ambient414 {
                     currentSource = steamapi;
                     minSlider.resetSlider(currentSource.getMin(), currentSource.getMax(), currentSource.getMinValue());
                     maxSlider.resetSlider(currentSource.getMin(), currentSource.getMax(), currentSource.getMaxValue());
+                    selector.translateTo(500, 80);
                 }
 
                 if (bingSelector.isPointInElement(mouseX, mouseY)) {
                     currentSource = bingTraffic;
                     minSlider.resetSlider(currentSource.getMin(), currentSource.getMax(), currentSource.getMinValue());
                     maxSlider.resetSlider(currentSource.getMin(), currentSource.getMax(), currentSource.getMaxValue());
+                    selector.translateTo(700, 80);
                 }
 
                 //If mouse within color slider adjust slider and lamp color
