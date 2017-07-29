@@ -16,17 +16,25 @@ The Ambient device changes color to indicate the selected data's status.
 You can select the different data sources with the top row of buttons.
 The user can then set the min and max values for each data source with the sliders. (Steam does not use sliders)
 
-![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/master/doc/images/Application.png)
+![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/master/doc/images/Application.PNG)
 
 Below are the current data sources color charts.
 
 ![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/master/doc/images/PineFlatFlow.png)  
+
+---  
  
 ![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/master/doc/images/PineFlatTemp.png)  
 
+---  
+
 ![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/master/doc/images/Steam.png)  
 
+---  
+
 ![alt test](https://raw.githubusercontent.com/aaronvil/ICS414_ambient/master/doc/images/BingTraffic.png)  
+
+---  
 
 ## Interface Controls
 The Min and Max Sliders allow the user to change the min and max values.  
